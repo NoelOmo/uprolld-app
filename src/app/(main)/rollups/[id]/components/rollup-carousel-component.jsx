@@ -9,7 +9,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import { useEffect, useState } from 'react';
-import ReactHtmlParser from 'react-html-parser';
 import SingleRollupComponent from "./single-rollup-component";
 import HeaderRollupComponent from "./header-rollup-component";
 
@@ -47,6 +46,6 @@ export default function RollupCarouselComponent({rollup}) {
 
 export function CarouselHtmlContent({letter}) {
     return(
-        <>{ReactHtmlParser(letter.htmlBody)}</>
+        <>{letter.htmlBody}</>
     )
 }
