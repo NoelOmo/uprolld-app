@@ -33,7 +33,10 @@ export function RollupListFilterComponent() {
     }
     setIsLoading(true);
     const results = await searchEmail(searchInput);
-    console.log(results.documents);
+    if(!results) {
+      setIsLoading(false);
+      return;
+    }
     setOpen((open) => !open);
     setSearchResults(results.documents);
     setIsLoading(false);

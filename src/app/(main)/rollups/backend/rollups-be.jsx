@@ -87,7 +87,7 @@ export async function searchEmail(searchTerm) {
         );
         return response;
     }catch (error) {
-        console.error("Error searching emails", error);
+        console.error("Error searching emails", error.message);
         return null;
     }
 }
