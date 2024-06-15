@@ -33,6 +33,7 @@ export function RollupListFilterComponent() {
     }
     setIsLoading(true);
     const results = await searchEmail(searchInput);
+    console.log(results.documents);
     setOpen((open) => !open);
     setSearchResults(results.documents);
     setIsLoading(false);
@@ -75,7 +76,7 @@ export function RollupListFilterComponent() {
                 <LoaderIcon className="animate-spin" />
               </div>
             }
-            {!isLoading && `No results found.`}
+            {!isLoading && `No results found. ${searchResults.length}`}
           </CommandEmpty>
           <CommandGroup heading="Suggestions">
             {searchResults.map((email, index) => (

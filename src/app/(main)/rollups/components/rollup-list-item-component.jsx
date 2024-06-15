@@ -17,7 +17,7 @@ export default function RollupListItemComponent({rollup}) {
 
     function getTitle(rollup) {
         let emails = [];
-        rollup.emails.map((email) => {
+        rollup.email.map((email) => {
             emails.push(email.sender.split("<")[0].replaceAll("\"", ""));
         });
         const uniqueItems = [...new Set(emails)];
@@ -49,7 +49,7 @@ export default function RollupListItemComponent({rollup}) {
                                 <div>
                                     <div className="rounded-full mb-0">
                                         <h3 className="text-md font-medium text-left">
-                                            {rollup.emails.length} Newsletters from {getTitle(rollup)}
+                                            {rollup.email.length} Newsletters from {getTitle(rollup)}
                                             <Badge className="ml-2 text-muted-foreground" variant="outline">{rollup.status}</Badge>
                                         </h3>
                                     </div>
@@ -70,7 +70,7 @@ export default function RollupListItemComponent({rollup}) {
                     <div className="px-2 md:px-4 ml-0 md:ml-16 flex">
                         <CornerDownRight className="w-4 h-4" />
                         <ul className="ml-2 pt-[4px] text-xs font-medium text-muted-foreground space-y-2">
-                            {rollup.emails.slice(0, 5).map((email) => (
+                            {rollup.email.slice(0, 5).map((email) => (
                                 <li className="">{email.subject} - <span className="font-light">{timeAgo(email.$createdAt)}</span> by <b>{email.sender}</b></li>
                             ))}
                             <Link href={`/rollups/${rollup.$id}`} className="mt-4">

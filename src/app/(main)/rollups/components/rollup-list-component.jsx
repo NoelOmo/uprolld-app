@@ -44,7 +44,7 @@ export default function RollupListComponent({rollups}) {
                     <Separator />
                     <Accordion type="single" collapsible>
                         {rollups.documents.map((rollup) => (
-                            rollup.emails.length > 0 && <RollupListItemComponent rollup={rollup} />
+                            rollup.email.length > 0 && <RollupListItemComponent rollup={rollup} />
                         ))}
                     </Accordion>
                     <div className="my-2 flow-root">

@@ -44,7 +44,7 @@ export async function getEmailsByRollUpId(rollupId) {
             process.env.NEXT_PUBLIC_APPWRITE_DB,
             process.env.NEXT_PUBLIC_APPWRITE_EMAILS_COLLECTION,
             [
-                Query.equal("rollups", rollupId),
+                Query.equal("rollup", rollupId),
                 Query.orderDesc("$createdAt"),
                 Query.limit(25)
             ]
@@ -79,7 +79,7 @@ export async function searchEmail(searchTerm) {
             process.env.NEXT_PUBLIC_APPWRITE_DB,
             process.env.NEXT_PUBLIC_APPWRITE_EMAILS_COLLECTION,
             [
-                Query.search("textBody", searchTerm),
+                Query.search("rawEmail", searchTerm),
                 Query.limit(5),
                 Query.select(["subject", "sender", "$id"])
 
