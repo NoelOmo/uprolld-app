@@ -1,23 +1,16 @@
 
 import React from 'react';
+import DOMPurify from 'dompurify';
+import renderHTML from 'react-render-html';
 
 
 export default function SingleRollupComponent({letter, index}) {
 
     const sanitizedHtml = modifyHtmlString(letter.htmlBody);
-    let domain = letter.sender.split("@")[1].replace(">", "");
-    if (domain.includes("gmail")) {
-        domain = domain.replace("gmail", "google")
-    }
-    const favicon = "https://" + domain + "/favicon.ico";
+    let cleanHtml = DOMPurify.sanitize(sanitizedHtml, {USE_PROFILES: {html: true}});
 
     return (
-        <iframe
-        srcDoc={sanitizedHtml}
-        title={`Newsletter ${index}`}
-        className="w-full min-h-[80vh] no-scrollbar"
-        sandbox="allow-popups"
-    />
+        <>{renderHTML(cleanHtml)}</>
     )
 }
 

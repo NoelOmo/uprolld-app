@@ -12,8 +12,11 @@ import { Button } from "@/components/ui/button";
 import { EnvelopeOpenIcon } from "@radix-ui/react-icons";
 import { timeAgo } from "@/lib/time-ago";
 import Link from "next/link";
+import { getEmailsByRollUpId } from "../backend/rollups-be";
 
-export default function RollupListItemComponent({rollup}) {
+export default async function RollupListItemComponent({rollup}) {
+
+    const rollupEmails = await getEmailsByRollUpId(rollup.$id);
 
     function getTitle(rollup) {
         let emails = [];
@@ -49,7 +52,7 @@ export default function RollupListItemComponent({rollup}) {
                                 <div>
                                     <div className="rounded-full mb-0">
                                         <h3 className="text-md font-medium text-left">
-                                            {rollup.email.length} Newsletters from {getTitle(rollup)}
+                                            {rollupEmails.documents.length} Newsletters from {getTitle(rollup)}
                                             <Badge className="ml-2 text-muted-foreground" variant="outline">{rollup.status}</Badge>
                                         </h3>
                                     </div>
@@ -61,7 +64,7 @@ export default function RollupListItemComponent({rollup}) {
                                 </div>
                             </div>
                             <div className="hidden md:block">
-                                <h3 className="text-xs font-medium text-muted-foreground">Issue #1</h3>
+                                <h3 className="text-xs font-medium text-muted-foreground">{rollup.$id}</h3>
                             </div>
                         </div>
                     </div>
@@ -70,11 +73,11 @@ export default function RollupListItemComponent({rollup}) {
                     <div className="px-2 md:px-4 ml-0 md:ml-16 flex">
                         <CornerDownRight className="w-4 h-4" />
                         <ul className="ml-2 pt-[4px] text-xs font-medium text-muted-foreground space-y-2">
-                            {rollup.email.slice(0, 5).map((email) => (
+                            {rollupEmails.documents.slice(0, 5).map((email) => (
                                 <li className="">{email.subject} - <span className="font-light">{timeAgo(email.$createdAt)}</span> by <b>{email.sender}</b></li>
                             ))}
-                            <Link href={`/rollups/${rollup.$id}`} className="mt-4">
-                                <Button variant="outline" size="sm">
+                            <Link href={`/rollups/${rollup.$id}`} >
+                                <Button variant="outline" size="sm" className="mt-4">
                                         <EnvelopeOpenIcon className="mr-2 h-4 w-4" /> Open
                                 </Button>
                             </Link>
