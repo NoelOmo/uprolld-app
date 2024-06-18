@@ -144,8 +144,7 @@ const getAdminAccount = async () => {
     const client = new Client()
         .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_URL)
         .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID)
-        .setKey(process.env.NEXT_PUBLIC_APPWRITE_API_KEY)
-        .setSelfSigned(true) // TODO - Set this to false once deployed with an actual ssl certificate
+        .setKey(process.env.NEXT_PUBLIC_APPWRITE_API_KEY);
 
         return new Account(client);
 }
@@ -153,8 +152,7 @@ const getAdminAccount = async () => {
 const getSessionClient = async () => {
     const client = new Client()
     .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_URL)
-    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID)
-    .setSelfSigned(true) // TODO - Set this to false once deployed with an actual ssl certificate
+    .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID);
 
     const session = cookies().get("session");
     
