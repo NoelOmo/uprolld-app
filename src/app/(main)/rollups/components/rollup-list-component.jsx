@@ -43,7 +43,7 @@ export default function RollupListComponent({rollups}) {
                     <RollupListFilterComponent />
                     <Separator />
                     <Accordion type="single" collapsible>
-                        {rollups.documents.map((rollup) => (
+                        {rollups.document && rollups.documents.map((rollup) => (
                             rollup.email.length > 0 && <RollupListItemComponent rollup={rollup} />
                         ))}
                     </Accordion>
