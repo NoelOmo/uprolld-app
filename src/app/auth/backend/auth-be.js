@@ -70,7 +70,7 @@ export const verifySessionToken = async () => {
         console.log("Error authenticating: ", error);
         return {
             success: false,
-            body: error,
+            body: null,
             error: error.message
         }
 
@@ -100,7 +100,7 @@ export const loginWithEmailAndPassword = async (email, password) => {
         console.log("Error authenticating: ", error);
         return {
             success: false,
-            body: error,
+            body: null,
             error: error.message
         }
     }
