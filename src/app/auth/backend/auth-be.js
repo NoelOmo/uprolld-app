@@ -71,7 +71,7 @@ export const verifySessionToken = async () => {
         return {
             success: false,
             body: null,
-            error: error.message
+            error: error
         }
 
     }
@@ -101,7 +101,7 @@ export const loginWithEmailAndPassword = async (email, password) => {
         return {
             success: false,
             body: null,
-            error: error.message
+            error: error
         }
     }
 }
