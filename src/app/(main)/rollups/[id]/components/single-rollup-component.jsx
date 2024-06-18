@@ -1,8 +1,7 @@
 
 import React from 'react';
 import DOMPurify from 'dompurify';
-import renderHTML from 'react-render-html';
-
+import parse from 'html-react-parser';
 
 export default function SingleRollupComponent({letter, index}) {
 
@@ -10,7 +9,7 @@ export default function SingleRollupComponent({letter, index}) {
     let cleanHtml = DOMPurify.sanitize(sanitizedHtml, {USE_PROFILES: {html: true}});
 
     return (
-        <>{renderHTML(cleanHtml)}</>
+        <>{parse(cleanHtml)}</>
     )
 }
 
