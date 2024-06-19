@@ -25,7 +25,7 @@ export default function RollupCarouselComponent({rollup}) {
                             <div className="p-1">
                                <HeaderRollupComponent index={index} letter={letter} />
                                 <Card className="shadow-none">
-                                    <CardContent className="flex aspect-square items-center justify-center rounded-md p-0 py-4 md:py-0 w-[100%] h-[80vh]">
+                                    <CardContent className="flex aspect-square items-center justify-center rounded-md p-0 py-4 md:p-2 w-[100%] h-[80vh]">
                                         <div className="w-full h-full overflow-y-scroll overflow-x-hidden no-scrollbar">
                                            <SingleRollupComponent index={index} letter={letter} />
                                         </div>

@@ -18,9 +18,9 @@ export default async function RollupListItemComponent({rollup}) {
 
     const rollupEmails = await getEmailsByRollUpId(rollup.$id);
 
-    function getTitle(rollup) {
+    function getTitle() {
         let emails = [];
-        rollup.email.map((email) => {
+        rollupEmails.documents.map((email) => {
             emails.push(email.sender.split("<")[0].replaceAll("\"", ""));
         });
         const uniqueItems = [...new Set(emails)];
@@ -52,7 +52,7 @@ export default async function RollupListItemComponent({rollup}) {
                                 <div>
                                     <div className="rounded-full mb-0">
                                         <h3 className="text-md font-medium text-left">
-                                            {rollupEmails.documents.length} Newsletters from {getTitle(rollup)}
+                                            {rollupEmails.documents.length} Newsletters from {getTitle()}
                                             <Badge className="ml-2 text-muted-foreground" variant="outline">{rollup.status}</Badge>
                                         </h3>
                                     </div>
