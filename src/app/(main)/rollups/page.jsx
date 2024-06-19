@@ -16,7 +16,7 @@ import { getRollUpsForUser } from "./backend/rollups-be";
 export default async function DashboardPage() {
 
   const rollups = await getRollUpsForUser();
-
+console.log("About to invoke")
   return (
     <ContentLayout title="Rollups">
       <Breadcrumb>

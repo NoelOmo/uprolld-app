@@ -8,7 +8,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import { useEffect, useState } from 'react';
 import SingleRollupComponent from "./single-rollup-component";
 import HeaderRollupComponent from "./header-rollup-component";
 

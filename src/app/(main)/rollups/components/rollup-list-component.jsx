@@ -1,5 +1,4 @@
 
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 
 import {
@@ -14,13 +13,6 @@ import {
     PaginationNext,
     PaginationPrevious,
   } from "@/components/ui/pagination"
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-  } from "@/components/ui/select"
   
 import RollupListItemComponent from "./rollup-list-item-component";
 import { Separator } from "@/components/ui/separator";
@@ -28,6 +20,7 @@ import { RollupListFilterComponent } from "./rollup-list-filter-component";
 
   
 export default function RollupListComponent({rollups}) {
+    console.log(rollups)
     return (
         <Card className="rounded-lg border-none mt-6">
             <CardContent className="p-6">
