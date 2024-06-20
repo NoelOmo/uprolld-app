@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { permanentRedirect, redirect } from 'next/navigation';
 import { cookies } from "next/headers";
-import { Client, Databases, Account, Query, ID } from "node-appwrite";
+import { Client, Databases, Account, Query, ID, Users } from "node-appwrite";
 
 export async function initiateResetPassword(email) {
     try {
@@ -106,6 +106,41 @@ export const loginWithEmailAndPassword = async (email, password) => {
     }
 }
 
+export const getUserPrefs = async (userId) => {
+    try {
+
+        const database = await getAdminDatabase();
+        const response = await database.listDocuments(
+            process.env.NEXT_PUBLIC_APPWRITE_DB,
+            process.env.NEXT_PUBLIC_APPWRITE_MAILBOX_COLLECTION,
+            [
+                Query.equal("userId", userId)
+            ]
+        );
+        
+        if (response.total === 0) {
+            return {
+                success: false,
+                body: response,
+                error: "no_preferences"
+            };
+        }
+
+        return {
+            success: true,
+            body: response,
+            error: null
+        };
+    }catch (error) {
+        console.log("Error creating preferences: ", error);
+        return {
+            success: false,
+            body: null,
+            error: error.message
+        }
+    }
+}
+
 export const verifyEmail = async () => {
     try {
         const account = await getAdminAccount();
@@ -161,4 +196,22 @@ const getSessionClient = async () => {
     }
 
     return new Account(client);
+}
+
+const getAdminUsersClient = async () => {
+    const client = new Client()
+        .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_URL)
+        .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID)
+        .setKey(process.env.NEXT_PUBLIC_APPWRITE_API_KEY)
+        return new Users(client);
+}
+
+const getAdminDatabase = async () => {
+    const client = new Client()
+        .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_URL)
+        .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID)
+        .setKey(process.env.NEXT_PUBLIC_APPWRITE_API_KEY)
+
+        const databases = new Databases(client);
+        return databases;
 }

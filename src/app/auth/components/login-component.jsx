@@ -18,7 +18,7 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ReloadIcon } from "@radix-ui/react-icons"
 import { useState } from "react"
-import { loginWithEmailAndPassword } from "../backend/auth-be"
+import { createUserPrefs, getUserPrefs, loginWithEmailAndPassword } from "../backend/auth-be"
 import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from 'next/navigation'
 import { useAuth } from "@/app/context/auth-context"
@@ -27,7 +27,7 @@ import { useDialog } from "@/app/context/dialog-context"
 export default function LoginComponent({ authComponents, setAuthComponents, updateDisplayedPanel }) {
 
   const disallowedDomains = ['example.com', 'test.com', 'uprolld.email'];
-  const { showDialog } = useDialog();
+  const { showDialog, hideDialog } = useDialog();
   const { toast } = useToast();
   const router = useRouter();
   const { login } = useAuth();
@@ -61,6 +61,14 @@ export default function LoginComponent({ authComponents, setAuthComponents, upda
       setIsLoading(false);
       return;
     }
+    
+    const userPrefs = await getUserPrefs(res.body.userId);
+    
+    if (!userPrefs.success) {
+      showDialog();
+    } else {
+      hideDialog();
+    }
 
     login(
       res.body.$id, 
@@ -72,7 +80,6 @@ export default function LoginComponent({ authComponents, setAuthComponents, upda
     );
     setIsLoading(false);
     showSuccessToast("Successfully logged in.");
-    showDialog();
     router.push('/rollups');
   }
 

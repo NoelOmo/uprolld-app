@@ -121,7 +121,7 @@ const CompleteProfileDialog = () => {
     const mailbox = JSON.parse(localStorage.getItem("uprolld.mailbox")).mailbox
     const res = await addPreferences(data, mailbox);
     if(res.success) {
-      localStorage.setItem("uprolld.mailbox", res.body)
+      localStorage.setItem("uprolld.mailbox", res.body);
     }
 
     setIsLoading(false);

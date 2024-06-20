@@ -157,7 +157,6 @@ const getAdminUsersClient = async () => {
         .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID)
         .setKey(process.env.NEXT_PUBLIC_APPWRITE_API_KEY)
         return new Users(client);
-
 }
 
 
