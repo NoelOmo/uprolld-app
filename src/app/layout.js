@@ -5,6 +5,7 @@ import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/toaster"
 import { AuthProvider } from "./context/auth-context";
 import { DialogProvider } from "./context/dialog-context";
+import Head from "next/head";
 
 
 export const metadata = {
@@ -39,6 +40,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      </Head>
       <body className={GeistSans.className}>
           <AuthProvider>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
