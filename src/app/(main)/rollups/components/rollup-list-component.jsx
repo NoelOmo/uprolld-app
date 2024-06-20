@@ -20,7 +20,7 @@ import { RollupListFilterComponent } from "./rollup-list-filter-component";
 
   
 export default function RollupListComponent({rollups}) {
-    console.log(rollups)
+
     return (
         <Card className="rounded-lg border-none mt-6">
             <CardContent className="p-6">
@@ -37,7 +37,7 @@ export default function RollupListComponent({rollups}) {
                     <Separator />
                     <Accordion type="single" collapsible>
                         {rollups.documents.map((rollup) => (
-                            rollup.email.length > 0 && <RollupListItemComponent rollup={rollup} />
+                            <RollupListItemComponent rollup={rollup} />
                         ))}
                     </Accordion>
                     <div className="my-2 flow-root">

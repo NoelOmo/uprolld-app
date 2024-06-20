@@ -10,7 +10,8 @@ export async function getRollUpsForUser() {
             process.env.NEXT_PUBLIC_APPWRITE_DB,
             process.env.NEXT_PUBLIC_APPWRITE_ROLLUPS_COLLECTION,
             [
-                Query.orderDesc("$createdAt")
+                Query.orderDesc("$createdAt"),
+                Query.select(["$createdAt", "$id", "recipient", "status"])
             ]
         );
         return emails;
@@ -45,7 +46,7 @@ export async function getEmailsByRollUpId(rollupId) {
             process.env.NEXT_PUBLIC_APPWRITE_EMAILS_COLLECTION,
             [
                 Query.equal("rollup", rollupId),
-                Query.orderDesc("$createdAt"),
+                // Query.orderDesc("$createdAt"),
                 Query.limit(5)
             ]
         );
