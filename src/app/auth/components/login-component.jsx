@@ -22,10 +22,12 @@ import { loginWithEmailAndPassword } from "../backend/auth-be"
 import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from 'next/navigation'
 import { useAuth } from "@/app/context/auth-context"
+import { useDialog } from "@/app/context/dialog-context"
 
 export default function LoginComponent({ authComponents, setAuthComponents, updateDisplayedPanel }) {
 
   const disallowedDomains = ['example.com', 'test.com', 'uprolld.email'];
+  const { showDialog } = useDialog();
   const { toast } = useToast();
   const router = useRouter();
   const { login } = useAuth();
@@ -70,7 +72,8 @@ export default function LoginComponent({ authComponents, setAuthComponents, upda
     );
     setIsLoading(false);
     showSuccessToast("Successfully logged in.");
-    router.push('/rollups')
+    showDialog();
+    router.push('/rollups');
   }
 
   const showErrorToast = (message) => {

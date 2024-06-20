@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/toaster"
 import { AuthProvider } from "./context/auth-context";
+import { DialogProvider } from "./context/dialog-context";
 
 
 export const metadata = {
@@ -41,7 +42,9 @@ export default function RootLayout({ children }) {
       <body className={GeistSans.className}>
           <AuthProvider>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-                {children}
+                <DialogProvider>
+                  {children}
+                </DialogProvider>
             </ThemeProvider>
           </AuthProvider>
         <Toaster />

@@ -86,7 +86,7 @@ export const loginWithEmailAndPassword = async (email, password) => {
         );
         cookies().set('session', session.secret, {
             httpOnly:true,
-            secure:false, // TODO - switch to true once deployed and create an env variable to set the current environment
+            secure:true, 
             sameSite:true,
             maxAge: new Date(session.expire),
             path: '/'

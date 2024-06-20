@@ -5,6 +5,7 @@ import { useStore } from "@/hooks/use-store";
 import { Footer } from "@/components/admin-panel/footer";
 import { Sidebar } from "@/components/admin-panel/sidebar";
 import { useSidebarToggle } from "@/hooks/use-sidebar-toggle";
+import CompleteProfileDialog from "./dialog";
 
 export default function AdminPanelLayout({
   children
@@ -15,6 +16,7 @@ export default function AdminPanelLayout({
 
   return (
     <>
+      <CompleteProfileDialog />
       <Sidebar />
       <main
         className={cn(

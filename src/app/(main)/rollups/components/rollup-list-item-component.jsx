@@ -39,7 +39,7 @@ export default async function RollupListItemComponent({rollup}) {
                     <div role="status" className="w-full dark:divide-gray-700 dark:border-gray-700 p-2 md:px-4">
                         <div className="flex items-center justify-between">
                             <div className="flex">
-                                <div className="hidden rounded-full bg-slate-300 mr-4 dark:bg-slate-800 md:block">
+                                <div className="hidden rounded-full bg-slate-300 mr-4 dark:bg-slate-800 md:block h-12 w-12">
                                     <Image
                                         src="/scroll.svg"
                                         alt="Scroll"
@@ -53,7 +53,16 @@ export default async function RollupListItemComponent({rollup}) {
                                     <div className="rounded-full mb-0">
                                         <h3 className="text-md font-medium text-left">
                                             {rollupEmails.documents.length} Newsletters from {getTitle()}
-                                            <Badge className="ml-2 text-muted-foreground" variant="outline">{rollup.status}</Badge>
+                                            {rollup.status === "CREATED" && 
+                                                <span className="inline-flex items-center bg-amber-100 text-amber-800 text-xs font-medium px-1py-1 rounded-full dark:bg-amber-900 dark:text-amber-300 ml-2">
+                                                    <span className="w-2 h-2 bg-amber-500 rounded-full"></span>
+                                                </span>
+                                            }
+                                            {rollup.status === "READY" && 
+                                                <span className="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-1 py-1 rounded-full dark:bg-green-900 dark:text-green-300 ml-2">
+                                                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                                                </span>
+                                            }
                                         </h3>
                                     </div>
                                     <div className="">
@@ -64,7 +73,7 @@ export default async function RollupListItemComponent({rollup}) {
                                 </div>
                             </div>
                             <div className="hidden md:block">
-                                <h3 className="text-xs font-medium text-muted-foreground">{rollup.$id}</h3>
+                                <h3 className="text-xs font-medium text-muted-foreground">{timeAgo(rollup.$createdAt)}</h3>
                             </div>
                         </div>
                     </div>
