@@ -38,7 +38,10 @@ import {
     })
     .refine((value) => !/\s/.test(value), {
         message: "Username must not contain spaces.",
-      })
+    })
+    .refine((value) => /^[a-zA-Z0-9_]+$/.test(value), {
+      message: "Username must not contain special characters, except underscores.",
+    })
     .transform(
         value => value.replaceAll(' ', '')
     ),
@@ -99,14 +102,23 @@ const CompleteProfileDialog = () => {
   const onEmailFormSubmit = async (data) => {
     setIsLoading(true);
     const res = await createMailbox(data);
+    console.log("Create Mail response", res)
     if(res.success === false) {
       if (res.error === "document_already_exists") {
         setError("This email address is already taken, please choose another one.");
+        setIsLoading(false);
+        return;
       }else if (res.error === "user_has_mailbox") {
         handleNext();
-      }
-      else {
+      }else if (res.error === "user_completed_mailbox_setup") {
+        localStorage.setItem("uprolld.mailbox", JSON.stringify(res.body));
+        hideDialog();
+        setIsLoading(false);
+        return;
+      }else if (res.error === "error_creating_mailbox") {
         setError(res.body);
+        setIsLoading(false);
+        return;
       }
     }
     localStorage.setItem("uprolld.mailbox", JSON.stringify(res.body))
@@ -219,7 +231,7 @@ const CompleteProfileDialog = () => {
             <FormItem>
               <FormLabel className="!mt-4 inline-block">I would like to receive a maximum of:</FormLabel>
               <FormControl>
-                <Select {...field}>
+                <Select {...field} onValueChange={field.onChange} defaultValue={field.value}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select an option" />
                   </SelectTrigger>
@@ -253,7 +265,7 @@ const CompleteProfileDialog = () => {
             <FormItem>
               <FormLabel className="inline-block">Every:</FormLabel>
               <FormControl>
-                <Select {...field}>
+                <Select {...field} onValueChange={field.onChange} defaultValue={field.value}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select frequency" />
                   </SelectTrigger>

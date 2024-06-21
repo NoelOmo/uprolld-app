@@ -78,12 +78,37 @@ export async function createMailbox(data) {
             const mailBoxRes = await createMailcowMailbox(data.email, currentUser.name);
             
             if (mailBoxRes[0].type !== "success") {
-                if (mailBoxRes[0].msg[0] === "danger") {
-                    return {
-                        success: false,
-                        body: "There was an error creating your mailbox.",
-                        error: "error_creating_mailbox"
-                    };
+                if (mailBoxRes[0].type === "danger") {
+                    if (mailBoxRes[0].msg[0] === "object_exists") {
+                        const r = await database.listDocuments(
+                            process.env.NEXT_PUBLIC_APPWRITE_DB,
+                            process.env.NEXT_PUBLIC_APPWRITE_MAILBOX_COLLECTION,
+                            [
+                                Query.equal("emailAddress", mailBoxRes[0].msg[1]),
+                            ]
+                        );
+                        if (r.total > 0) {
+                            if (r.documents[0].userId === currentUser.$id) {
+                                return {
+                                    success: false,
+                                    body: r.documents[0],
+                                    error: "user_completed_mailbox_setup"
+                                }
+                            }else if (r.documents[0].userId !== currentUser.$id) {
+                                return {
+                                    success: false,
+                                    body: null,
+                                    error: "document_already_exists"
+                                }
+                            }
+                        }
+                    }else {
+                        return {
+                            success: false,
+                            body: "There was an error creating your mailbox.",
+                            error: "error_creating_mailbox"
+                        };
+                    }
                 }
             }
             const emailAddress = mailBoxRes[0].msg[1];
