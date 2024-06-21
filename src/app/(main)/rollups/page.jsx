@@ -12,10 +12,13 @@ import {
 } from "@/components/ui/breadcrumb";
 import RollupListComponent from "./components/rollup-list-component";
 import { getRollUpsForUser } from "./backend/rollups-be";
+import { revalidatePath } from "next/cache";
 
 export default async function DashboardPage() {
 
   const rollups = await getRollUpsForUser();
+
+  revalidatePath('/')
   
   return (
     <ContentLayout title="Rollups">
