@@ -1,5 +1,6 @@
 
 
+import { revalidatePath } from "next/cache";
 import { Client, Databases, Query } from "node-appwrite";
 
 export async function getRollUpsForUser() {
@@ -14,6 +15,7 @@ export async function getRollUpsForUser() {
                 Query.select(["$createdAt", "$id", "recipient", "status"])
             ]
         );
+        revalidatePath('/', 'layout')
         return emails;
     } catch (error) {
         console.error("Error fetching rollups:", error);
@@ -50,6 +52,7 @@ export async function getEmailsByRollUpId(rollupId) {
                 Query.limit(5)
             ]
         );
+        revalidatePath('/', 'layout');
         return emails;
     } catch (error) {
         console.error("Error fetching rollups:", error);
